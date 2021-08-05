@@ -27,9 +27,38 @@ with open('recipes.txt') as file:
 
 
 print(cook_book)
+print()
 
-# get_shop_list_by_dishes(dishes, person_count)
+def get_shop_list_by_dishes(dishes, person_count):
 
-dishes = ['Запеченный картофель', 'Омлет'] 
-person_count = 2
+  # dishes = ['Фахитос', 'Омлет'] 
+  # person_count = 2
+  products_list = []
 
+  for dish_2 in dishes:
+    if dish_2 in cook_book.keys():
+      # print(dish_2)
+      products_list.append(cook_book[dish_2])
+
+  products_dict = {}
+  quantity_dict = {}
+
+
+  for product in products_list:
+    for quantity_dict in product:
+      name = quantity_dict.get('ingredient_name')
+      if name in products_dict.keys(): 
+        quantity_dict['quantity'] = int(quantity_dict['quantity']) * person_count + int(products_dict[name]['quantity'])
+        del quantity_dict['ingredient_name']
+        products_dict[name] = quantity_dict
+      else:
+        products_dict[name]= ''
+        quantity_dict['quantity'] = int(quantity_dict['quantity']) * person_count
+        del quantity_dict['ingredient_name']
+        products_dict[name] = quantity_dict
+  return products_dict
+
+# print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
+
+for i in get_shop_list_by_dishes(['Запеченный картофель', 'Фахитос', 'Омлет'], 3).items():
+  print(i)
