@@ -1,3 +1,4 @@
+from pprint import pprint
 cook_book = {}
 ingredient = {}
 reciept = []
@@ -26,7 +27,7 @@ with open('recipes.txt') as file:
       
 
 
-print(cook_book)
+pprint(cook_book)
 print()
 
 def get_shop_list_by_dishes(dishes, person_count):
@@ -58,7 +59,5 @@ def get_shop_list_by_dishes(dishes, person_count):
         products_dict[name] = quantity_dict
   return products_dict
 
-# print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
+pprint(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
 
-for i in get_shop_list_by_dishes(['Запеченный картофель', 'Фахитос', 'Омлет'], 3).items():
-  print(i)
