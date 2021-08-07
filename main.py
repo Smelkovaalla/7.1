@@ -31,33 +31,34 @@ pprint(cook_book)
 print()
 
 def get_shop_list_by_dishes(dishes, person_count):
-
-  # dishes = ['Фахитос', 'Омлет'] 
-  # person_count = 2
   products_list = []
+  for dish in dishes:
+    i = 0
+    while i < len(cook_book[dish]):
+      products_list.append(cook_book[dish][i])
+      i += 1
 
-  for dish_2 in dishes:
-    if dish_2 in cook_book.keys():
-      # print(dish_2)
-      products_list.append(cook_book[dish_2])
-
+  pprint('products_list:')
+  pprint(products_list)
+  print()
   products_dict = {}
   quantity_dict = {}
 
 
   for product in products_list:
-    for quantity_dict in product:
-      name = quantity_dict.get('ingredient_name')
-      if name in products_dict.keys(): 
-        quantity_dict['quantity'] = int(quantity_dict['quantity']) * person_count + int(products_dict[name]['quantity'])
-        del quantity_dict['ingredient_name']
-        products_dict[name] = quantity_dict
-      else:
-        products_dict[name]= ''
-        quantity_dict['quantity'] = int(quantity_dict['quantity']) * person_count
-        del quantity_dict['ingredient_name']
-        products_dict[name] = quantity_dict
+    name = product['ingredient_name']
+    if name in products_dict.keys():  
+      products_dict[name]['quantity'] = int(products_dict[name]['quantity']) + int(product['quantity'])
+    else:
+      products_dict[name] = product
+
+  for pro in products_dict.values():
+    del pro['ingredient_name']
+    pro['quantity'] = int(pro['quantity']) * person_count
+
+  pprint(f'products_dict на {person_count} персоны:')
   return products_dict
 
-pprint(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
+
+pprint(get_shop_list_by_dishes(['Фахитос', 'Фахитос', 'Омлет'], 2))
 
