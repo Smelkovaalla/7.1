@@ -43,22 +43,25 @@ def get_shop_list_by_dishes(dishes, person_count):
   print()
   products_dict = {}
   quantity_dict = {}
+  amount = {}
 
-
-  for product in products_list:
+  for product in products_list:   
     name = product['ingredient_name']
     if name in products_dict.keys():  
-      products_dict[name]['quantity'] = int(products_dict[name]['quantity']) + int(product['quantity'])
+      amount[name] += 1 
     else:
+      amount[name] = 1
       products_dict[name] = product
 
-  for pro in products_dict.values():
+  print(amount)
+  print()
+
+  for ing, pro in products_dict.items():
     del pro['ingredient_name']
-    pro['quantity'] = int(pro['quantity']) * person_count
+    pro['quantity'] = int(pro['quantity']) * int(amount[ing]) * person_count 
 
   pprint(f'products_dict на {person_count} персоны:')
   return products_dict
 
-
-pprint(get_shop_list_by_dishes(['Фахитос', 'Фахитос', 'Омлет'], 2))
+pprint(get_shop_list_by_dishes(['Фахитос', 'Фахитос', 'Фахитос', 'Омлет'], 2))
 
